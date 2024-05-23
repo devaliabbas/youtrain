@@ -27,7 +27,9 @@ const renderer = ({
   } else {
     return (
       <span>
-        {hours}:{minutes}:{seconds}
+        {hours > 9 ? hours : "0" + hours}:
+        {minutes > 9 ? minutes : "0" + minutes}:
+        {seconds > 9 ? seconds : "0" + seconds}
       </span>
     )
   }
@@ -49,8 +51,9 @@ const MemoCountdown = React.memo(CountDownWrapper)
 
 const RandomTest = () => {
   const [currentQuestion, setCurrentQuestion] = useState<number>(0)
-  const [answersList, setAnswersList] = useState<number[]>([])
+  const [answersList, setAnswersList] = useState<(number | undefined)[]>([])
   const [endTime] = useState<number>(Date.now() + 7200000)
+  const [isAllAnswered, setIsAllAnswered] = useState<boolean>(false)
 
   const len: number = Math.floor(((currentQuestion + 1) * 100) / 50)
 
@@ -58,6 +61,9 @@ const RandomTest = () => {
     const ans = [...answersList]
     ans[currentQuestion] = index
     setAnswersList(ans)
+    if (!ans.includes(undefined) && ans.length === MockData.length) {
+      setIsAllAnswered(true)
+    }
   }
 
   const moveHandler = (state: boolean) => {
@@ -90,10 +96,11 @@ const RandomTest = () => {
           </h1>
           <MemoCountdown endTime={endTime} submitAnswers={submitAnswers} />
         </div>
-        <p className="text-xl my-4">{MockData[currentQuestion].question}</p>
+        <p className="text-lg my-4">{MockData[currentQuestion].question}</p>
         <div className="flex flex-col">
           {MockData[currentQuestion].options.map((item, index) => (
             <button
+              key={index}
               onClick={() => answerHandler(index)}
               className="rounded-2xl p-2 py-4 m-2 my-4 bg-slate-200 option-btn active:shadow-none active:translate-y-2 cursor-pointer flex justify-start"
               style={{
@@ -110,7 +117,7 @@ const RandomTest = () => {
         </div>
       </div>
 
-      <div className="flex justify-evenly mt-4">
+      <div className="flex justify-evenly my-4">
         <button
           onClick={() => moveHandler(false)}
           className="option-btn py-2 px-4 border-2 rounded-2xl flex justify-between items-center text-xl w-32 active:shadow-none active:translate-y-2 cursor-pointer"
@@ -131,8 +138,8 @@ const RandomTest = () => {
         </button>
       </div>
 
-      {answersList.length === MockData.length ? (
-        <div className="flex justify-center items-center mt-8">
+      {isAllAnswered ? (
+        <div className="flex justify-center items-center my-8">
           <button
             onClick={() => submitAnswers()}
             className="bg-green-300 option-btn py-2 px-4 border-2 rounded-2xl flex justify-between items-center text-xl w-48 active:shadow-none active:translate-y-2 cursor-pointer"
