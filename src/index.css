@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    * {
+        font-family: "Cairo", sans-serif;
+    }
+}
+
+@layer components {
+    .option-btn {
+        -webkit-box-shadow: 0px 8px 0px 0px rgba(204,204,204,1);
+        -moz-box-shadow: 0px 8px 0px 0px rgba(204,204,204,1);
+        box-shadow: 0px 8px 0px 0px rgba(204,204,204,1);
+    }
+}
