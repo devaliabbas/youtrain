@@ -52,7 +52,7 @@ const CLMode = () => {
           </>
         ) : (
           <div className="flex flex-col justify-center w-screen items-center">
-            <h1 className="mt-12 font-bold text-2xl">نهاية الأسئلة</h1>
+            <h1 className="my-12 font-bold text-2xl">نهاية الأسئلة</h1>
             <ResultTable correctCount={correctCount} len={MockData.length} />
             <button
               onClick={() => navigate(0)}

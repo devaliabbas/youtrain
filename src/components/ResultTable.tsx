@@ -5,7 +5,7 @@ type ResultTableProps = {
 
 const ResultTable = (props: ResultTableProps) => {
   return (
-    <div className="text-xl mt-12 w-screen grid grid-cols-[2fr_1fr] pr-4 border-2">
+    <div className="text-xl w-full grid grid-cols-[2fr_1fr] pr-4">
       <div className="my-4">عدد الأسئلة:</div>
       <div className="my-4">{props.len}</div>
       <div className="my-4">إجابات صحيحة:</div>
