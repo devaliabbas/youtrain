@@ -4,7 +4,7 @@ import Layout from "./pages/Layout"
 import Home from "./pages/Home"
 import Settings from "./pages/Settings"
 import NotFound from "./pages/NotFound"
-import CLMode from "./pages/CLMode"
+import QLMode from "./pages/QLMode"
 import RandomTest from "./pages/RandomTest"
 
 const App = () => {
@@ -13,7 +13,7 @@ const App = () => {
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />}/>
         <Route path="settings" element={<Settings />}/>
-        <Route path="clmode" element={<CLMode />}/>
+        <Route path="qlmode" element={<QLMode />}/>
         <Route path="randomtest" element={<RandomTest />} />
         <Route path="*" element={<NotFound />}/>
       </Route>

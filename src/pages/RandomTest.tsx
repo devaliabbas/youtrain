@@ -180,9 +180,9 @@ const RandomTest = () => {
           <ResultTable correctCount={finalMark / 2} len={MockData.length} />
           <div className="text-xl w-full grid grid-cols-[2fr_1fr] pr-4">
             <div className="my-4">العلامة:</div>
-            <div className="my-4">{finalMark}</div>
+            <div className="my-4">{finalMark === 48 ? "48+2" : finalMark}</div>
             <div className="my-4">النتيجة: </div>
-            <div className={`my-4 font-bold ${finalResult?.color}`}>
+            <div className={`my-4 font-bold text-lg ${finalResult?.color}`}>
               {finalResult?.state}
             </div>
           </div>

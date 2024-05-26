@@ -5,4 +5,5 @@ type MockDataType = {
     question: string
     options: string[]
     answer: number
+    flag: string
 }

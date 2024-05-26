@@ -8,7 +8,7 @@ import ResultTable from "../components/ResultTable"
 import NextPopUp from "../components/NextPopUp"
 import ProgressBar from "../components/ProgressBar"
 
-const CLMode = () => {
+const QLMode = () => {
   const navigate = useNavigate()
 
   const [currentQuestion, setCurrentQuestion] = useState<number>(0)
@@ -67,4 +67,4 @@ const CLMode = () => {
   )
 }
 
-export default CLMode
+export default QLMode
