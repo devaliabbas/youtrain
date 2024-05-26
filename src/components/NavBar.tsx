@@ -6,7 +6,7 @@ const NavBar = () => {
       <div className="flex justify-between items-center h-full mx-4">
         <span className="material-symbols-outlined text-3xl">menu</span>
         <Link to={'/'}>
-          <h1 className="font-bold text-2xl">GoTest</h1>
+          <h1 className="font-bold text-2xl">YouTrain</h1>
         </Link>
       </div>
     </div>

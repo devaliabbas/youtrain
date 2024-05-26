@@ -1,5 +1,5 @@
 type QuestionProps = {
-  question: MockDataType
+  question: QuestionType
   isAnswered: boolean
   setIsAnswered: React.Dispatch<React.SetStateAction<boolean>>
   setIsCorrect: React.Dispatch<React.SetStateAction<boolean>>
@@ -22,12 +22,13 @@ const Question = (props: QuestionProps) => {
   }
 
   return (
-    <div className="p-4">
-      <h1 className="font-bold">السؤال رقم {props.question.id + 1}:</h1>
-      <p className="text-xl my-4">{props.question.question}</p>
+    <div className="p-4 pb-2">
+      <h1 className="font-bold">{props.question.id + 1}#</h1>
+      <p className="text-xl mb-4 mt-2">{props.question.question}</p>
       <div className="flex flex-col">
-        {props.question.options.map((item, index) => (
+        {props.question.options.map((item: string, index: number) => (
           <button
+            key={index}
             style={{
               backgroundColor:
                 props.selected === index

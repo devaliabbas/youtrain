@@ -27,7 +27,7 @@ const Home = () => {
         />
         <HomeButton
           title="وضع التعلم المستمر"
-          func={() => navigate("/clmode")}
+          func={() => navigate("/qlmode")}
         />
         <HomeButton title="إختبار تجريبي عشوائي" func={() => navigate('/randomtest')} />
       </div>
