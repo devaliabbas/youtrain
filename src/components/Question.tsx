@@ -8,6 +8,14 @@ type QuestionProps = {
   setSelected: React.Dispatch<React.SetStateAction<number | undefined>>
 }
 
+const flagColors: {[key: string]: string} = {
+  "شبكات": "bg-red-600",
+  "برمجيات": "bg-green-600",
+  "قواعد بيانات": "bg-blue-600",
+  "ذكاء صنعي": "bg-purple-600",
+  "خوارزميات": "bg-yellow-600"
+}
+
 const Question = (props: QuestionProps) => {
   const answerHandler = (index: number) => {
     props.setSelected(index)
@@ -23,7 +31,12 @@ const Question = (props: QuestionProps) => {
 
   return (
     <div className="p-4 pb-2">
-      <h1 className="font-bold">{props.question.id + 1}#</h1>
+      <div className="flex justify-between items-center mb-4 mt-2">
+        <h1 className="font-bold">{props.question.id + 1}#</h1>
+        <div className={`rounded-xl text-white py-1 px-4 font-bold ${flagColors[props.question.flag]}`}>
+          {props.question.flag}
+        </div>
+      </div>
       <p className="text-xl mb-4 mt-2">{props.question.question}</p>
       <div className="flex flex-col">
         {props.question.options.map((item: string, index: number) => (

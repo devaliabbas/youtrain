@@ -7,6 +7,7 @@ import Question from "../components/Question"
 import ResultTable from "../components/ResultTable"
 import NextPopUp from "../components/NextPopUp"
 import ProgressBar from "../components/ProgressBar"
+import { Circles } from "react-loader-spinner"
 
 const QLMode = () => {
   const navigate = useNavigate()
@@ -29,11 +30,8 @@ const QLMode = () => {
     : 0
 
   const getQuestions = async () => {
-    const { data, error } = await supabase.from("quick_learn_mode").select()
-    if (error) {
-      console.log(error)
-      return
-    }
+    const { data, error } = await supabase.rpc("random_questions")
+    if (error) return
     setQuestions(data as QuestionType[])
   }
 
@@ -43,43 +41,57 @@ const QLMode = () => {
 
   return (
     <div>
-      <div className="mt-16">
-        {questions && questions[currentQuestion] ? (
-          <>
-            <ProgressBar len={len} />
+      {questions ? (
+        <div className="mt-16">
+          {questions[currentQuestion] ? (
+            <>
+              <ProgressBar len={len} />
 
-            <Question
-              question={questions![currentQuestion]}
-              setIsAnswered={setIsAnswered}
-              setIsCorrect={setIsCorrect}
-              isAnswered={isAnswered}
-              setCorrectCount={setCorrectCount}
-              selected={selected}
-              setSelected={setSelected}
-            />
+              <Question
+                question={questions![currentQuestion]}
+                setIsAnswered={setIsAnswered}
+                setIsCorrect={setIsCorrect}
+                isAnswered={isAnswered}
+                setCorrectCount={setCorrectCount}
+                selected={selected}
+                setSelected={setSelected}
+              />
 
-            <NextPopUp
-              nextHandler={nextHandler}
-              isCorrect={isCorrect}
-              isAnswered={isAnswered}
-            />
-          </>
-        ) : (
-          <div className="flex flex-col justify-center w-screen items-center">
-            <h1 className="my-12 font-bold text-2xl">نهاية الأسئلة</h1>
-            <ResultTable
-              correctCount={correctCount}
-              len={questions ? questions.length : 0}
-            />
-            <button
-              onClick={() => navigate(0)}
-              className="py-2 px-4 border-2 rounded-xl option-btn mt-8 active:shadow-none active:translate-y-2 cursor-pointer"
-            >
-              الجلسة التالية
-            </button>
-          </div>
-        )}
-      </div>
+              <NextPopUp
+                nextHandler={nextHandler}
+                isCorrect={isCorrect}
+                isAnswered={isAnswered}
+              />
+            </>
+          ) : (
+            <div className="flex flex-col justify-center w-screen items-center">
+              <h1 className="my-12 font-bold text-2xl">نهاية الأسئلة</h1>
+              <ResultTable
+                correctCount={correctCount}
+                len={questions ? questions.length : 0}
+              />
+              <button
+                onClick={() => navigate(0)}
+                className="py-2 px-4 border-2 rounded-xl option-btn mt-8 active:shadow-none active:translate-y-2 cursor-pointer"
+              >
+                الجلسة التالية
+              </button>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="flex justify-center items-center h-screen">
+          <Circles
+            height="80"
+            width="80"
+            color="#4fa94d"
+            ariaLabel="circles-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+          />
+        </div>
+      )}
     </div>
   )
 }
