@@ -3,6 +3,7 @@ import Countdown from "react-countdown"
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { supabase } from "../supabase"
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa6"
 
 import ProgressBar from "../components/ProgressBar"
 import ResultTable from "../components/ResultTable"
@@ -55,6 +56,14 @@ const CountDownWrapper = ({
   />
 )
 const MemoCountdown = React.memo(CountDownWrapper)
+
+const flagColors: {[key: string]: string} = {
+  "شبكات": "bg-red-600",
+  "برمجيات": "bg-green-600",
+  "قواعد بيانات": "bg-blue-600",
+  "ذكاء صنعي": "bg-purple-600",
+  "خوارزميات": "bg-yellow-600"
+}
 
 const RandomTest = () => {
   const navigate = useNavigate()
@@ -142,6 +151,11 @@ const RandomTest = () => {
                 <p className="text-lg my-4">
                   {questions[currentQuestion].question}
                 </p>
+                <div className="flex justify-start">
+                  <div className={`rounded-xl text-white py-1 px-4 font-bold ${flagColors[questions[currentQuestion].flag]}`}>
+                    {questions[currentQuestion].flag}
+                  </div>
+                </div>
                 <div className="flex flex-col">
                   {questions[currentQuestion].options.map(
                     (item: string, index: number) => (
@@ -169,9 +183,9 @@ const RandomTest = () => {
                   onClick={() => moveHandler(false)}
                   className="option-btn py-2 px-4 border-2 rounded-2xl flex justify-between items-center text-xl w-32 active:shadow-none active:translate-y-2 cursor-pointer"
                 >
-                  <span className="material-symbols-outlined text-xl">
-                    arrow_forward_ios
-                  </span>
+                  <FaAngleRight 
+                    size={25}
+                  />
                   Back
                 </button>
                 <button
@@ -179,9 +193,9 @@ const RandomTest = () => {
                   className="option-btn py-2 px-4 border-2 rounded-2xl flex justify-between items-center text-xl w-32 active:shadow-none active:translate-y-2 cursor-pointer"
                 >
                   Next
-                  <span className="material-symbols-outlined text-xl">
-                    arrow_back_ios
-                  </span>
+                  <FaAngleLeft 
+                    size={25}
+                  />
                 </button>
               </div>
 

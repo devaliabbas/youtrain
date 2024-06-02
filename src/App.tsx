@@ -6,6 +6,7 @@ import Settings from "./pages/Settings"
 import NotFound from "./pages/NotFound"
 import QLMode from "./pages/QLMode"
 import RandomTest from "./pages/RandomTest"
+import LastExams from "./pages/LastExams"
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="settings" element={<Settings />}/>
         <Route path="qlmode" element={<QLMode />}/>
         <Route path="randomtest" element={<RandomTest />} />
+        <Route path="lastexams" element={<LastExams />} />
         <Route path="*" element={<NotFound />}/>
       </Route>
     </Routes>

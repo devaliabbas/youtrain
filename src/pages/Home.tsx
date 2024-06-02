@@ -23,13 +23,16 @@ const Home = () => {
       <div className="bg-green-600 rounded-t-3xl">
         <HomeButton
           title="إختبر نفسك في الدورات السابقة"
-          func={() => navigate(0)}
+          func={() => navigate("/lastexams")}
         />
         <HomeButton
           title="وضع التعلم المستمر"
           func={() => navigate("/qlmode")}
         />
-        <HomeButton title="إختبار تجريبي عشوائي" func={() => navigate('/randomtest')} />
+        <HomeButton
+          title="إختبار تجريبي عشوائي"
+          func={() => navigate("/randomtest")}
+        />
       </div>
     </div>
   )
