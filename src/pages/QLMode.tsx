@@ -30,9 +30,10 @@ const QLMode = () => {
     : 0
 
   const getQuestions = async () => {
-    const { data, error } = await supabase.rpc("random_questions", {q_limit: 20})
-    if (error) return
+    const { data, error } = await supabase.rpc("random_questions", {p_q_limit: 20})
+    if (error) return console.log(error)
     setQuestions(data as QuestionType[])
+    
   }
 
   useEffect(() => {

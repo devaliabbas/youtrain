@@ -38,6 +38,7 @@ const Question = (props: QuestionProps) => {
         </div>
       </div>
       <p className="text-xl mb-4 mt-2">{props.question.question}</p>
+      <img src={props.question.image} alt="question_image" className="my-4"/>
       <div className="flex flex-col">
         {props.question.options.map((item: string, index: number) => (
           <button

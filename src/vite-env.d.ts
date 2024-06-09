@@ -6,4 +6,8 @@ type QuestionType = {
   options: string[]
   answer: number
   flag: string
+  year: number
+  session: number
+  specialization: string
+  image: string
 }

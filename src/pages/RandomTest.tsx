@@ -3,7 +3,7 @@ import Countdown from "react-countdown"
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { supabase } from "../supabase"
-import { FaAngleLeft, FaAngleRight } from "react-icons/fa6"
+import { FaAngleLeft, FaAngleRight, FaCheck } from "react-icons/fa6"
 
 import ProgressBar from "../components/ProgressBar"
 import ResultTable from "../components/ResultTable"
@@ -57,12 +57,12 @@ const CountDownWrapper = ({
 )
 const MemoCountdown = React.memo(CountDownWrapper)
 
-const flagColors: {[key: string]: string} = {
+const flagColors: { [key: string]: string } = {
   "شبكات": "bg-red-600",
-  "برمجيات": "bg-green-600",
+ "برمجيات": "bg-green-600",
   "قواعد بيانات": "bg-blue-600",
   "ذكاء صنعي": "bg-purple-600",
-  "خوارزميات": "bg-yellow-600"
+  "خوارزميات": "bg-yellow-600",
 }
 
 const RandomTest = () => {
@@ -120,7 +120,7 @@ const RandomTest = () => {
 
   const getQuestions = async () => {
     const { data, error } = await supabase.rpc("random_questions", {
-      q_limit: 50,
+      p_q_limit: 50,
     })
     if (error) return
     setQuestions(data as QuestionType[])
@@ -151,8 +151,13 @@ const RandomTest = () => {
                 <p className="text-lg my-4">
                   {questions[currentQuestion].question}
                 </p>
+                <img src={questions[currentQuestion].image} alt="question_image" className="my-4"/>
                 <div className="flex justify-start">
-                  <div className={`rounded-xl text-white py-1 px-4 font-bold ${flagColors[questions[currentQuestion].flag]}`}>
+                  <div
+                    className={`rounded-xl text-white py-1 px-4 font-bold ${
+                      flagColors[questions[currentQuestion].flag]
+                    }`}
+                  >
                     {questions[currentQuestion].flag}
                   </div>
                 </div>
@@ -183,9 +188,7 @@ const RandomTest = () => {
                   onClick={() => moveHandler(false)}
                   className="option-btn py-2 px-4 border-2 rounded-2xl flex justify-between items-center text-xl w-32 active:shadow-none active:translate-y-2 cursor-pointer"
                 >
-                  <FaAngleRight 
-                    size={25}
-                  />
+                  <FaAngleRight size={25} />
                   Back
                 </button>
                 <button
@@ -193,9 +196,7 @@ const RandomTest = () => {
                   className="option-btn py-2 px-4 border-2 rounded-2xl flex justify-between items-center text-xl w-32 active:shadow-none active:translate-y-2 cursor-pointer"
                 >
                   Next
-                  <FaAngleLeft 
-                    size={25}
-                  />
+                  <FaAngleLeft size={25} />
                 </button>
               </div>
 
@@ -206,9 +207,7 @@ const RandomTest = () => {
                     className="bg-green-300 option-btn py-2 px-4 border-2 rounded-2xl flex justify-between items-center text-xl w-48 active:shadow-none active:translate-y-2 cursor-pointer"
                   >
                     تصحيح الإجابات
-                    <span className="material-symbols-outlined text-xl">
-                      task_alt
-                    </span>
+                    <FaCheck size={25} />
                   </button>
                 </div>
               ) : null}

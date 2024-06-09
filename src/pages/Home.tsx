@@ -26,7 +26,7 @@ const Home = () => {
           func={() => navigate("/lastexams")}
         />
         <HomeButton
-          title="وضع التعلم المستمر"
+          title="وضع التعلم السريع"
           func={() => navigate("/qlmode")}
         />
         <HomeButton
