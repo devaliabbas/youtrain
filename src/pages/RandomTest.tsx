@@ -58,11 +58,11 @@ const CountDownWrapper = ({
 const MemoCountdown = React.memo(CountDownWrapper)
 
 const flagColors: { [key: string]: string } = {
-  "شبكات": "bg-red-600",
- "برمجيات": "bg-green-600",
+  شبكات: "bg-red-600",
+  برمجيات: "bg-green-600",
   "قواعد بيانات": "bg-blue-600",
   "ذكاء صنعي": "bg-purple-600",
-  "خوارزميات": "bg-yellow-600",
+  خوارزميات: "bg-yellow-600",
 }
 
 const RandomTest = () => {
@@ -138,7 +138,7 @@ const RandomTest = () => {
             <>
               <ProgressBar len={len} />
 
-              <div className="p-4">
+              <div className="p-4 mb-16">
                 <div className="flex justify-between">
                   <h1 className="font-bold">
                     {questions[currentQuestion].id + 1}#
@@ -148,11 +148,7 @@ const RandomTest = () => {
                     submitAnswers={submitAnswers}
                   />
                 </div>
-                <p className="text-lg my-4">
-                  {questions[currentQuestion].question}
-                </p>
-                <img src={questions[currentQuestion].image} alt="question_image" className="my-4"/>
-                <div className="flex justify-start">
+                <div className="flex justify-start mt-4">
                   <div
                     className={`rounded-xl text-white py-1 px-4 font-bold ${
                       flagColors[questions[currentQuestion].flag]
@@ -160,6 +156,18 @@ const RandomTest = () => {
                   >
                     {questions[currentQuestion].flag}
                   </div>
+                </div>
+                <p className="text-lg my-4">
+                  {questions[currentQuestion].question}
+                </p>
+                <div className="flex justify-center items-center">
+                  {questions[currentQuestion].image && (
+                    <img
+                      src={`https://zprnrqfkzyzadjfqihgy.supabase.co/storage/v1/object/public/imageStorage/questionImages/${questions[currentQuestion].image}`}
+                      alt="question_image"
+                      className="my-4"
+                    />
+                  )}
                 </div>
                 <div className="flex flex-col">
                   {questions[currentQuestion].options.map(
@@ -183,20 +191,18 @@ const RandomTest = () => {
                 </div>
               </div>
 
-              <div className="flex justify-evenly my-4">
+              <div className="fixed left-0 bottom-12 w-screen z-10 flex justify-between my-4">
                 <button
                   onClick={() => moveHandler(false)}
-                  className="option-btn py-2 px-4 border-2 rounded-2xl flex justify-between items-center text-xl w-32 active:shadow-none active:translate-y-2 cursor-pointer"
+                  className="option-btn rounded-l-full bg-white p-1 border-2 flex justify-center items-center text-xl w-10 h-20 active:shadow-none active:translate-y-2 cursor-pointer"
                 >
-                  <FaAngleRight size={25} />
-                  Back
+                  <FaAngleRight size={30} />
                 </button>
                 <button
                   onClick={() => moveHandler(true)}
-                  className="option-btn py-2 px-4 border-2 rounded-2xl flex justify-between items-center text-xl w-32 active:shadow-none active:translate-y-2 cursor-pointer"
+                  className="option-btn rounded-r-full bg-white p-1 border-2 flex justify-center items-center text-xl w-10 h-20 active:shadow-none active:translate-y-2 cursor-pointer"
                 >
-                  Next
-                  <FaAngleLeft size={25} />
+                  <FaAngleLeft size={30} />
                 </button>
               </div>
 

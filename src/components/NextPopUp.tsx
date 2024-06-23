@@ -9,7 +9,7 @@ const NextPopUp = (props: NextPopUpProps) => {
     <div
       className={`${props.isCorrect ? "bg-green-100" : "bg-red-100"} ${
         props.isAnswered ? "opacity-100 left-0" : "opacity-0 left-full"
-      } absolute bottom-0 w-screen h-52 rounded-t-3xl flex flex-col justify-between py-8 duration-300 transition-all`}
+      } fixed bottom-0 w-screen h-32 opacity-80 rounded-t-3xl flex flex-col justify-between py-4 duration-300 transition-all`}
     >
       <div className="flex justify-center items-center">
         <h1

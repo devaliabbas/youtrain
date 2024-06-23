@@ -1,26 +1,37 @@
+import { useState } from "react"
+import { supabase } from "../supabase"
 import { useForm, SubmitHandler, useFieldArray } from "react-hook-form"
 import { FaTrashCan, FaPlus } from "react-icons/fa6"
+import { v4 as uuidv4 } from "uuid"
+import { Circles } from "react-loader-spinner"
 
 type Inputs = {
   question: string
   options: { value: string }[]
   answer: number
   flag: string
-  year: number
-  session: number
-  specialization: string
-  image: File
+  year: number | null
+  session: number | null
+  specialization: string | null
+  image: HTMLInputElement | null
 }
 
 const Dashboard = () => {
+  const [isUploading, setIsUploading] = useState<boolean>(false)
+
   const {
     register,
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<Inputs>({
     defaultValues: {
-      options: [{ value: "" }, { value: "" }, { value: "" }, { value: "" }], // Default values for the options
+      options: [{ value: "" }, { value: "" }, { value: "" }, { value: "" }],
+      year: null,
+      session: null,
+      specialization: null,
+      image: null,
     },
   })
 
@@ -29,8 +40,39 @@ const Dashboard = () => {
     name: "options",
   })
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data)
+  const onSubmit: SubmitHandler<Inputs> = async (formData) => {
+    setIsUploading(true)
+    const newOptionsArray: string[] = []
+    const imageFile = formData.image ? formData.image[0] : null
+    const imageID = uuidv4() + ".png"
+
+    if (imageFile) {
+      const { error: imageUploadError } = await supabase.storage
+        .from("imageStorage")
+        .upload(`questionImages/${imageID}`, imageFile)
+
+      if (imageUploadError) {
+        reset()
+        console.log(imageUploadError)
+        setIsUploading(false)
+        return
+      }
+    }
+
+    formData.options.map((item) => {
+      newOptionsArray.push(item.value)
+    })
+
+    const { error: formUploadError } = await supabase.from("questions").insert({
+      ...formData,
+      options: newOptionsArray,
+      image: imageFile ? imageID : null,
+    })
+
+    if (!formUploadError) {
+      reset()
+      setIsUploading(false)
+    }
   }
 
   return (
@@ -94,7 +136,6 @@ const Dashboard = () => {
             {...register("answer", { required: true })}
             className="border-slate-400 border-2 rounded-xl p-2 w-full focus:outline-none"
           >
-            <option value=""></option>
             {fields.map((_item, index) => (
               <option key={index} value={index}>
                 {index}
@@ -113,7 +154,6 @@ const Dashboard = () => {
             {...register("flag", { required: true })}
             className="border-slate-400 border-2 rounded-xl p-2 w-full focus:outline-none"
           >
-            <option value=""></option>
             <option value="برمجيات">برمجيات</option>
             <option value="شبكات">شبكات</option>
             <option value="خوارزميات">خوارزميات</option>
@@ -138,9 +178,8 @@ const Dashboard = () => {
             {...register("session")}
             className="border-slate-400 border-2 rounded-xl p-2 w-full focus:outline-none"
           >
-            <option value=""></option>
-            <option value="1">1</option>
-            <option value="2">2</option>
+            <option value={1}>1</option>
+            <option value={2}>2</option>
           </select>
         </div>
         <div className="px-4 mt-4">
@@ -149,7 +188,6 @@ const Dashboard = () => {
             {...register("specialization")}
             className="border-slate-400 border-2 rounded-xl p-2 w-full focus:outline-none"
           >
-            <option value=""></option>
             <option value="تخرج">تخرج</option>
             <option value="برمجيات">برمجيات</option>
             <option value="شبكات">شبكات</option>
@@ -167,9 +205,21 @@ const Dashboard = () => {
         <div className="flex justify-center items-center my-8">
           <button
             type="submit"
-            className="my-4 bg-green-500 rounded-xl py-2 px-4 text-white font-bold"
+            className="flex justify-center items-center my-4 bg-green-500 rounded-xl text-xl w-32 h-12 text-white font-bold"
           >
-            رفع السؤال
+            {isUploading ? (
+              <Circles
+                height="40"
+                width="40"
+                color="white"
+                ariaLabel="circles-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+              />
+            ) : (
+              "رفع السؤال"
+            )}
           </button>
         </div>
       </form>
