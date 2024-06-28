@@ -2,8 +2,8 @@ import React from "react"
 import Countdown from "react-countdown"
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { supabase } from "../supabase"
 import { FaAngleLeft, FaAngleRight, FaCheck } from "react-icons/fa6"
+import { getQuestions } from "../api"
 
 import ProgressBar from "../components/ProgressBar"
 import ResultTable from "../components/ResultTable"
@@ -118,16 +118,13 @@ const RandomTest = () => {
     setFinalMark(mark)
   }
 
-  const getQuestions = async () => {
-    const { data, error } = await supabase.rpc("random_questions", {
-      p_q_limit: 50,
-    })
-    if (error) return
+  const _getQuestions = async () => {
+    const data = await getQuestions(50)
     setQuestions(data as QuestionType[])
   }
 
   useEffect(() => {
-    getQuestions()
+    _getQuestions()
   }, [])
 
   return (
@@ -141,7 +138,7 @@ const RandomTest = () => {
               <div className="p-4 mb-16">
                 <div className="flex justify-between">
                   <h1 className="font-bold">
-                    {questions[currentQuestion].id + 1}#
+                    {questions[currentQuestion].id}#
                   </h1>
                   <MemoCountdown
                     endTime={endTime}
@@ -151,10 +148,10 @@ const RandomTest = () => {
                 <div className="flex justify-start mt-4">
                   <div
                     className={`rounded-xl text-white py-1 px-4 font-bold ${
-                      flagColors[questions[currentQuestion].flag]
+                      flagColors[questions[currentQuestion].flag_q]
                     }`}
                   >
-                    {questions[currentQuestion].flag}
+                    {questions[currentQuestion].flag_q}
                   </div>
                 </div>
                 <p className="text-lg my-4">
@@ -170,7 +167,7 @@ const RandomTest = () => {
                   )}
                 </div>
                 <div className="flex flex-col">
-                  {questions[currentQuestion].options.map(
+                  {questions[currentQuestion].options_q.map(
                     (item: string, index: number) => (
                       <button
                         key={index}

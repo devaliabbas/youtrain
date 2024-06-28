@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { supabase } from "../supabase"
+import { getQuestions } from "../api"
 
 import Question from "../components/Question"
 
@@ -29,15 +29,13 @@ const QLMode = () => {
     ? Math.floor(((currentQuestion + 1) * 100) / questions.length)
     : 0
 
-  const getQuestions = async () => {
-    const { data, error } = await supabase.rpc("random_questions", {p_q_limit: 20})
-    if (error) return console.log(error)
-    setQuestions(data as QuestionType[])
-    
+  const _getQuestions = async () => {
+    const res = await getQuestions(20)
+    setQuestions(res as QuestionType[])
   }
 
   useEffect(() => {
-    getQuestions()
+    _getQuestions()
   }, [])
 
   return (

@@ -17,6 +17,7 @@ const flagColors: { [key: string]: string } = {
 }
 
 const Question = (props: QuestionProps) => {
+
   const answerHandler = (index: number) => {
     props.setSelected(index)
 
@@ -32,13 +33,13 @@ const Question = (props: QuestionProps) => {
   return (
     <div className="p-4 pb-2 mb-32">
       <div className="flex justify-between items-center mb-4 mt-2">
-        <h1 className="font-bold">{props.question.id + 1}#</h1>
+        <h1 className="font-bold">{props.question.id}#</h1>
         <div
           className={`rounded-xl text-white py-1 px-4 font-bold ${
-            flagColors[props.question.flag]
+            flagColors[props.question.flag_q]
           }`}
         >
-          {props.question.flag}
+          {props.question.flag_q}
         </div>
       </div>
       <p className="text-xl mb-4 mt-2">{props.question.question}</p>
@@ -48,7 +49,7 @@ const Question = (props: QuestionProps) => {
         )}
       </div>
       <div className="flex flex-col">
-        {props.question.options.map((item: string, index: number) => (
+        {props.question.options_q.map((item: string, index: number) => (
           <button
             key={index}
             style={{
