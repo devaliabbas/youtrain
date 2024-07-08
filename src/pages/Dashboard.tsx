@@ -1,17 +1,16 @@
 import { useState } from "react"
-import { supabase } from "../supabase"
 import { useForm, SubmitHandler, useFieldArray } from "react-hook-form"
 import { FaTrashCan, FaPlus } from "react-icons/fa6"
-import { v4 as uuidv4 } from "uuid"
 import { Circles } from "react-loader-spinner"
+import { addQuestion } from '../api'
 
 type Inputs = {
   question: string
-  options: { value: string }[]
+  options_q: { value: string }[]
   answer: number
-  flag: string
-  year: number | null
-  session: number | null
+  flag_q: string
+  year_q: number | null
+  session_q: number | null
   specialization: string | null
   image: HTMLInputElement | null
 }
@@ -27,9 +26,9 @@ const Dashboard = () => {
     formState: { errors },
   } = useForm<Inputs>({
     defaultValues: {
-      options: [{ value: "" }, { value: "" }, { value: "" }, { value: "" }],
-      year: null,
-      session: null,
+      options_q: [{ value: "" }, { value: "" }, { value: "" }, { value: "" }],
+      year_q: null,
+      session_q: null,
       specialization: null,
       image: null,
     },
@@ -37,39 +36,20 @@ const Dashboard = () => {
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "options",
+    name: "options_q",
   })
 
   const onSubmit: SubmitHandler<Inputs> = async (formData) => {
     setIsUploading(true)
     const newOptionsArray: string[] = []
-    const imageFile = formData.image ? formData.image[0] : null
-    const imageID = uuidv4() + ".png"
 
-    if (imageFile) {
-      const { error: imageUploadError } = await supabase.storage
-        .from("imageStorage")
-        .upload(`questionImages/${imageID}`, imageFile)
-
-      if (imageUploadError) {
-        reset()
-        console.log(imageUploadError)
-        setIsUploading(false)
-        return
-      }
-    }
-
-    formData.options.map((item) => {
+    formData.options_q.map((item) => {
       newOptionsArray.push(item.value)
     })
 
-    const { error: formUploadError } = await supabase.from("questions").insert({
-      ...formData,
-      options: newOptionsArray,
-      image: imageFile ? imageID : null,
-    })
+    const response = await addQuestion({...formData, options_q: newOptionsArray})
 
-    if (!formUploadError) {
+    if (response) {
       reset()
       setIsUploading(false)
     }
@@ -110,7 +90,7 @@ const Dashboard = () => {
               <div className="flex justify-center items-center w-full">
                 <p className="ml-2 text-xl">{index}</p>
                 <input
-                  {...register(`options.${index}.value` as const, {
+                  {...register(`options_q.${index}.value` as const, {
                     required: true,
                   })}
                   type="text"
@@ -151,7 +131,7 @@ const Dashboard = () => {
             المحور: <span className="text-red-500">*</span>
           </p>
           <select
-            {...register("flag", { required: true })}
+            {...register("flag_q", { required: true })}
             className="border-slate-400 border-2 rounded-xl p-2 w-full focus:outline-none"
           >
             <option value="برمجيات">برمجيات</option>
@@ -167,7 +147,7 @@ const Dashboard = () => {
         <div className="px-4 mt-4">
           <p className="text-xl mb-2">السنة: </p>
           <input
-            {...register("year")}
+            {...register("year_q")}
             type="text"
             className="border-slate-400 border-2 rounded-xl p-2 w-full focus:outline-none"
           />
@@ -175,7 +155,7 @@ const Dashboard = () => {
         <div className="px-4 mt-4">
           <p className="text-xl mb-2">الدورة:</p>
           <select
-            {...register("session")}
+            {...register("session_q")}
             className="border-slate-400 border-2 rounded-xl p-2 w-full focus:outline-none"
           >
             <option value={1}>1</option>
