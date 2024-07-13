@@ -15,11 +15,9 @@ const LastExams = () => {
   const { register, handleSubmit } = useForm<Inputs>()
 
 
-  const onSubmit: SubmitHandler<Inputs> = async (formData) => {
-
+  const onSubmit: SubmitHandler<Inputs> = async (formData, e) => {
     const newFormData = { ...formData, specialization: selected }
-
-    navigate("/qlmode", { state: { data: newFormData } })
+    navigate("/" + e?.nativeEvent.submitter.name, { state: { data: newFormData } })
   }
 
   return (
@@ -89,10 +87,10 @@ const LastExams = () => {
           </select>
         </div>
         <div className="flex justify-between items-center mt-8 px-8">
-          <button className="option-btn py-4 px-4 border-2 rounded-2xl flex justify-center items-center w-32 active:shadow-none active:translate-y-2 cursor-pointer">
+          <button name="randomtest" className="option-btn py-4 px-4 border-2 rounded-2xl flex justify-center items-center w-32 active:shadow-none active:translate-y-2 cursor-pointer">
             إمتحان تجريبي
           </button>
-          <button className="option-btn py-4 px-4 border-2 rounded-2xl flex justify-center items-center w-32 active:shadow-none active:translate-y-2 cursor-pointer">
+          <button name="qlmode" className="option-btn py-4 px-4 border-2 rounded-2xl flex justify-center items-center w-32 active:shadow-none active:translate-y-2 cursor-pointer">
             وضع التعلم
           </button>
         </div>

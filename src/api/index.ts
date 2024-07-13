@@ -1,4 +1,4 @@
-import axios, { AxiosResponse, isAxiosError } from "axios"
+import axios, { AxiosResponse } from "axios"
 
 axios.defaults.baseURL = "http://localhost:3000/api"
 
@@ -35,7 +35,7 @@ export const getQuestions = async (limit: number) => {
     })
     return response.data
   } catch (error) {
-    if (isAxiosError(error) && error.response?.status === 403) {
+    if (error.response?.status === 403) {
       window.localStorage.removeItem("token")
     }
   }
@@ -55,7 +55,7 @@ export const getQuestionsWithFilter = async (options: FilterOptions) => {
     )
     return response.data
   } catch (error) {
-    if (isAxiosError(error) && error.response?.status === 403) {
+    if (error.response?.status === 403) {
       window.localStorage.removeItem("token")
     }
   }
@@ -71,7 +71,7 @@ export const addQuestion = async (data: QuestionType) => {
     })
     return response.data
   } catch (error) {
-    if (isAxiosError(error) && error.response?.status === 403) {
+    if (error.response?.status === 403) {
       window.localStorage.removeItem("token")
     }
   }
