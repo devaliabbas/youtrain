@@ -24,6 +24,12 @@ type FilterOptions = {
   specialization: string
 }
 
+type ChangePasswordType = {
+  email: string
+  password: string
+  newPassword: string
+}
+
 export const getQuestions = async (limit: number) => {
   const token = window.localStorage.getItem("token")
 
@@ -95,6 +101,7 @@ export const signin = async (
     }
   }
 }
+
 export const signup = async (data: SignupType) => {
   try {
     const response = await axios.post("/auth/signup", {
@@ -107,6 +114,24 @@ export const signup = async (data: SignupType) => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       return error.response?.data
+    } else {
+      return { error: "An unexpected error occurred." }
+    }
+  }
+}
+
+
+export const changePassword = async (data: ChangePasswordType) => {
+  try {
+    const response = await axios.post("/auth/changePassword", {
+      email: data.email,
+      password: data.password,
+      newPassword: data.newPassword,
+    })
+    return response
+  } catch (error) {    
+    if (axios.isAxiosError(error)) {
+      return error.response
     } else {
       return { error: "An unexpected error occurred." }
     }

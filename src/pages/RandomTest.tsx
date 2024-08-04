@@ -191,13 +191,13 @@ const RandomTest = () => {
               <div className="fixed left-0 bottom-12 w-screen z-10 flex justify-between my-4">
                 <button
                   onClick={() => moveHandler(false)}
-                  className="option-btn rounded-l-full bg-white p-1 border-2 flex justify-center items-center text-xl w-10 h-20 active:shadow-none active:translate-y-2 cursor-pointer"
+                  className="option-btn rounded-l-full bg-white p-1 -z-40 border-2 flex justify-center items-center text-xl w-10 h-20 active:shadow-none active:translate-y-2 cursor-pointer"
                 >
                   <FaAngleRight size={30} />
                 </button>
                 <button
                   onClick={() => moveHandler(true)}
-                  className="option-btn rounded-r-full bg-white p-1 border-2 flex justify-center items-center text-xl w-10 h-20 active:shadow-none active:translate-y-2 cursor-pointer"
+                  className="option-btn rounded-r-full bg-white p-1 -z-40 border-2 flex justify-center items-center text-xl w-10 h-20 active:shadow-none active:translate-y-2 cursor-pointer"
                 >
                   <FaAngleLeft size={30} />
                 </button>
@@ -207,7 +207,7 @@ const RandomTest = () => {
                 <div className="flex justify-center items-center my-8">
                   <button
                     onClick={() => submitAnswers()}
-                    className="bg-green-300 option-btn py-2 px-4 border-2 rounded-2xl flex justify-between items-center text-xl w-48 active:shadow-none active:translate-y-2 cursor-pointer"
+                    className="bg-green-300 -z-50 option-btn py-2 px-4 border-2 rounded-2xl flex justify-between items-center text-xl w-48 active:shadow-none active:translate-y-2 cursor-pointer"
                   >
                     تصحيح الإجابات
                     <FaCheck size={25} />
